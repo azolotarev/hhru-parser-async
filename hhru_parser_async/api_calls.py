@@ -56,10 +56,10 @@ async def get_ids(url: str) -> List[int]:
     Load all vacancy ids from a search page
 
     Args:
-        url (str): [description]
+        url (str): search url with page selected
 
     Returns:
-        List[int]: [description]
+        List[int]: vacancy ids for that page
     """
     async with ClientSession() as session:
         async with session.get(url) as response:
@@ -69,12 +69,24 @@ async def get_ids(url: str) -> List[int]:
 
 
 async def get_all_vacancies(vacancies_ids: List[int]) -> None:
+    """
+    Loads all vacancy jsons to cache
+
+    Args:
+        vacancies_ids (List[int]): list of vacancy ids from get_vacancy_ids
+    """
     print('Loading vacancies...')
     for f in tqdm.asyncio.tqdm.as_completed([get_vacancy_info(id_) for id_ in vacancies_ids]):
         await f
 
 
 async def get_vacancy_info(id_: int) -> None:
+    """
+    Loads vacancy json and saves it to cache
+
+    Args:
+        id_ (int): vacancy id
+    """
     url = f"{BASE_URL}/vacancies/{id_}"
     async with ClientSession() as session:
         async with session.get(url) as response:
