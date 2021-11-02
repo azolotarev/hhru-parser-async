@@ -4,6 +4,7 @@ from json.decoder import JSONDecodeError
 from typing import List
 
 import requests
+import tqdm.asyncio
 from aiohttp import ClientSession
 
 BASE_URL = "https://api.hh.ru"
@@ -68,7 +69,9 @@ async def get_ids(url: str) -> List[int]:
 
 
 async def get_all_vacancies(vacancies_ids: List[int]) -> None:
-    await asyncio.gather(*[get_vacancy_info(id_) for id_ in vacancies_ids])
+    print('Loading vacancies...')
+    for f in tqdm.asyncio.tqdm.as_completed([get_vacancy_info(id_) for id_ in vacancies_ids]):
+        await f
 
 
 async def get_vacancy_info(id_: int) -> None:
