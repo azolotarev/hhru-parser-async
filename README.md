@@ -22,6 +22,7 @@ An in-depth paragraph about your project and overview of use.
 
 * export FLASK_APP
 * export FLASK_DEBUG
+* flask run -h 0.0.0.0 -p 80
 
 ```
 code blocks for commands

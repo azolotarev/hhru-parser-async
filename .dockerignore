@@ -1,0 +1,12 @@
+# IDE and Python stuff
+.ipynb_checkpoints/
+.mypy_cache/
+.pytest_cache/
+.unotes/
+.venv/
+.vscode/
+dist/
+
+# My stuff
+TODO.md
+*.ipynb
