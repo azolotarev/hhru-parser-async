@@ -1,6 +1,6 @@
 import asyncio
 import json
-from json.decoder import JSONDecodeError
+import os
 from typing import List
 
 import requests
@@ -8,7 +8,7 @@ import tqdm.asyncio
 from aiohttp import ClientSession
 
 BASE_URL = "https://api.hh.ru"
-CACHE_FOLDER = "cache"
+CACHE_DIR = "cache"
 
 
 def get_total_vacancies(query: str, area: int = 1) -> int:
@@ -92,5 +92,5 @@ async def get_vacancy_info(id_: int) -> None:
         async with session.get(url) as response:
             result = await response.read()
             info = json.loads(result.decode('utf-8'))
-            with open(f'{CACHE_FOLDER}/{id_}.json', 'w') as f:
+            with open(os.path.join(CACHE_DIR, f'{id_}.json'), 'w') as f:
                 json.dump(info, f)
